@@ -312,7 +312,13 @@ function defaults(){
   const m=(from,text)=>({id:uid(),cid:c,from,date:'2-27',time:'',text});
   return {
     settings:{showClock:true,date:'',time:''},
-    contacts:[{id:c,name:'In Yeon',number:'XXX-XXX-XXXX',memo:'bodyguard'}],
+    contacts:[{id:c,name:'In Yeon',number:'XXX-XXX-XXXX',memo:'bodyguard'}, 
+              {id:c,name:'Mom',number:'XXX-XXX-XXXX',memo:''},
+              {id:c,name:'Dad',number:'XXX-XXX-XXXX',memo:''},
+              {id:c,name:'Loreto',number:'XXX-XXX-XXXX',memo:'inyeon uncle'},
+              {id:c,name:'Ivan',number:'XXX-XXX-XXXX',memo:'investigator.'},
+              {id:c,name:'Ivan2',number:'XXX-XXX-XXXX',memo:'ivan other number'},
+              {id:c,name:'Ivan3',number:'XXX-XXX-XXXX',memo:'ivan other number'},],
     messages:[
       m('me','The canyon may be very hot and humid, just considering the location alone. Just keep that in mind when you decide on clothing.'),
       m('them','OK.'),
