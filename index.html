@@ -312,14 +312,16 @@ function defaults(){
   const m=(from,text)=>({id:uid(),cid:c,from,date:'2-27',time:'',text});
   return {
     settings:{showClock:true,date:'',time:''},
-    contacts:[{id:c,name:'In Yeon',number:'',memo:''}],
+    contacts:[{id:c,name:'In Yeon',number:'XXX-XXX-XXXX',memo:'bodyguard'}],
     messages:[
       m('me','The canyon may be very hot and humid, just considering the location alone. Just keep that in mind when you decide on clothing.'),
       m('them','OK.'),
       m('them',"Don't care."),
       m('them','Thank you for the reminder'),
       m('them','Hope you are well, Yora'),
-      m('them','What made you ask?')
+      m('them','What made you ask?'),
+      m('me','Hope you’re doing well too, Yeon.'),
+      m('me','No particular reason. I just didn’t want you to suffer a heat stroke.')
     ],
     searches:[]
   };
