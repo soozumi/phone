@@ -6,7 +6,7 @@
 <title>Yora's Phone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Nunito:wght@900&family=Oswald:wght@300;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Kosugi+Maru&family=Nunito:wght@900&family=Oswald:wght@300;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#e4e4e4;
@@ -20,10 +20,15 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:#222;font-family:'
 button,input,select,textarea{font-family:inherit}
 
 #stage{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;gap:36px;padding:16px}
+@media (min-width:921px){
+  html,body{height:100%;overflow:hidden}
+  #stage{height:100vh;height:100dvh;min-height:0;align-items:center}
+  .pin{max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto}
+}
 #phoneCol{flex:none;display:flex;flex-direction:column;align-items:center}
 #box{position:relative}
 #scaler{position:absolute;left:0;top:0;transform-origin:0 0}
-.hint{margin:10px 0 0;font-size:13px;color:#777;text-align:center;max-width:430px;line-height:1.5}
+.hint{margin:8px 0 0;font-size:12px;color:#777;text-align:center;max-width:430px;line-height:1.5}
 .linkbtn{background:none;border:0;color:#7a63b5;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:2px}
 
 /* ---------- closed phone (traced from the mockup image) ---------- */
@@ -53,8 +58,8 @@ button,input,select,textarea{font-family:inherit}
 .model{position:absolute;left:330px;top:55px;font:300 22px/1 'Oswald',sans-serif;color:#8b898a;letter-spacing:.5px}
 .bezel{position:absolute;left:24px;top:85px;width:377px;height:633px;background:#000;border-radius:6px}
 .aulogo{position:absolute;left:50px;top:682px;display:flex;align-items:baseline;gap:4px;color:#8d8d8d}
-.aulogo b{font:900 24px/1 'Nunito',Arial,sans-serif}
-.aulogo small{font-size:8px;letter-spacing:.3px}
+.aulogo b{font:400 26px/1 'Kosugi Maru','Nunito',Arial,sans-serif;-webkit-text-stroke:.6px currentColor}
+.aulogo small{font:400 9px/1 'Kosugi Maru','Nunito',Arial,sans-serif;letter-spacing:.3px}
 .key{position:absolute;top:750px;width:88px;height:48px;background:#5f5e5f;border:2px solid #3b3a3b;border-radius:14px;color:#fff;
   display:flex;align-items:center;justify-content:center;font:300 34px/1 'Oswald',sans-serif;cursor:pointer;user-select:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
 .key:active,.dp:active,.callkey:active,.endkey:active{filter:brightness(1.25);transform:translateY(1px)}
@@ -72,7 +77,9 @@ button,input,select,textarea{font-family:inherit}
 .screen{position:absolute;left:45px;top:100px;width:335px;height:572px;border-radius:6px;overflow:hidden;background:var(--lcd);
   font-family:var(--pix);color:#fff;font-size:20px;line-height:1.2;user-select:none}
 .status{position:absolute;left:0;top:0;right:0;height:48px;z-index:2;display:flex;align-items:center;padding:0 5px;color:#444;
-  background:repeating-linear-gradient(0deg,#a6c3df 0 2px,#9bbad8 2px 3px)}
+  background:#a2c0dc}
+/* LCD scanline texture over the WHOLE screen (boot splash and every app), not just the status bar */
+.screen::after{content:"";position:absolute;inset:0;z-index:30;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(30,60,105,.16) 0 1px,rgba(255,255,255,.07) 1px 2px,transparent 2px 3px)}
 .status .sl{display:flex;align-items:center;gap:5px}
 .status .sm{margin-left:auto;margin-right:24px}
 .status .sr{text-align:right;color:#4a4a4a}
@@ -172,8 +179,8 @@ button,input,select,textarea{font-family:inherit}
 @keyframes hg{to{transform:rotate(360deg)}}
 .boot{position:absolute;inset:0;z-index:5;background:#fff;display:none;color:#333}
 .boot.on{display:block}
-.boot .au{position:absolute;left:0;right:0;top:170px;text-align:center;font:900 120px/1 'Nunito','Arial Rounded MT Bold',Arial,sans-serif;color:#eb5505}
-.boot .by{position:absolute;left:0;right:0;top:300px;text-align:center;font:700 18px/1 Arial,sans-serif;color:#eb5505;letter-spacing:1px}
+.boot .au{position:absolute;left:0;right:0;top:170px;text-align:center;font:400 124px/1 'Kosugi Maru','Nunito','Arial Rounded MT Bold',Arial,sans-serif;color:#eb5505;-webkit-text-stroke:2px #eb5505}
+.boot .by{position:absolute;left:0;right:0;top:300px;text-align:center;font:400 19px/1 'Kosugi Maru','Nunito',Arial,sans-serif;color:#eb5505;letter-spacing:1px}
 .boot .kyo2{position:absolute;left:0;right:0;bottom:70px;text-align:center;font:500 18px/1 'Oswald',sans-serif;letter-spacing:5px;color:#888}
 .boot .bar{position:absolute;left:70px;right:70px;bottom:40px;height:8px;border:2px solid #ddd;border-radius:6px;overflow:hidden}
 .boot .bar i{display:block;height:100%;width:0;background:#eb5505}
@@ -185,6 +192,12 @@ button,input,select,textarea{font-family:inherit}
 .panel.show{width:min(540px,calc(100vw - 32px));opacity:1}
 .pin{width:min(540px,calc(100vw - 32px));padding:4px 0 40px;font-size:15px}
 .ptitle{font-size:20px;font-weight:500;margin:6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{padding:7px 13px;border:1px solid #8a8a8a;background:#ececec;cursor:pointer;font-size:14px;border-radius:18px;color:#222}
+.chip span{opacity:.65;font-size:12px;margin-left:3px}
+.chip.on{background:#7a63b5;border-color:#7a63b5;color:#fff}
+.chip.add{background:#fff;border-style:dashed;color:#5a4a8a}
+.chip.add.on{border-style:solid;color:#fff}
 .phead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
 .phead select{font-size:15px;padding:5px 8px;background:#fff;border:1px solid #aaa}
 .pdate{text-align:center;font-size:34px;margin:22px 0 12px;cursor:pointer}
@@ -195,12 +208,12 @@ button,input,select,textarea{font-family:inherit}
 .bub.sent{background:#c0c0c0;text-align:right}
 .bub.cur{outline:2px solid #7a63b5}
 .bmeta{font-size:12px;color:#777;margin-top:6px}
-.btools{display:none!important;position:absolute;top:-13px;right:8px;gap:2px}
+.btools{display:none;position:absolute;top:-13px;right:8px;gap:2px}
 .bub:hover .btools{display:flex}
 @media (hover:none){.btools{display:flex}}
 .mini{font-size:12px;padding:2px 7px;border:1px solid #999;background:#f4f4f4;cursor:pointer;border-radius:3px}
 .mini:hover{background:#fff}
-.composer{display:none}
+.composer{margin:20px 0 0 auto;width:min(100%,460px);background:#c9c9c9;padding:14px;display:flex;flex-direction:column;gap:8px}
 .composer input,.composer textarea,.gen input{font-size:14px;padding:7px 8px;border:1px solid #999;background:#fff;width:100%}
 .composer textarea{resize:vertical}
 .lbl2{font-size:13px;color:#555}
@@ -305,57 +318,99 @@ const WD=['日','月','火','水','木','金','土'];
 const isOk=k=>k==='ok'||k==='soft2';
 
 /* ================= data ================= */
-/* Nothing is saved: a refresh always returns the phone to the starting state below.
-   To change the permanent content, edit defaults(). */
+/* ####################################################################
+   #  EDIT THE PHONE'S STARTING CONTENT HERE                          #
+   #                                                                  #
+   #  Nothing is saved, so a page refresh always returns to this.     #
+   #                                                                  #
+   #  Each PERSON is one block in CONTACTS below, and the messages    #
+   #  for that person live INSIDE their block, so it is always clear  #
+   #  who a message belongs to.                                       #
+   #                                                                  #
+   #    them('...')  = a message THEY sent you (left side)            #
+   #    me('...')    = a message YOU sent them (right side)           #
+   #    day('2-27', [ ... ])  = a group of messages on that date      #
+   #                                                                  #
+   #  To add a person: copy a whole { name: ... } block, paste it     #
+   #  after the last one (keep the comma between blocks), and change  #
+   #  the name and messages. A block with an  off:true  line is       #
+   #  skipped (delete that line to turn it on). The FIRST active      #
+   #  block is the top of the phone's Messages list. A person with    #
+   #  no messages only shows up in Contacts.                          #
+   #################################################################### */
+const them=(text,time)=>({from:'them',text:text,time:time||''});
+const me=(text,time)=>({from:'me',text:text,time:time||''});
+const day=(date,list)=>list.map(m=>Object.assign({},m,{date:date}));
+
+const CONTACTS=[
+
+  /* ---------------------------- IN YEON ---------------------------- */
+  {
+    name:'In Yeon',
+    number:'',
+    memo:'',
+    messages:[
+      day('2-27',[
+        me('The canyon may be very hot and humid, just considering the location alone. Just keep that in mind when you decide on clothing.'),
+        them('OK.'),
+        them("Don't care."),
+        them('Thank you for the reminder'),
+        them('Hope you are well, Yora'),
+        them('What made you ask?')
+      ])
+    ]
+  },
+
+  /* ------------------------------ MOM ------------------------------ */
+  {
+    off:true,   // <-- delete this line to show Mom on the phone
+    name:'Mom',
+    number:'',
+    memo:'',
+    messages:[
+      day('2-27',[
+        them('Did you eat yet?'),
+        me('yes mom')
+      ]),
+      day('2-28',[
+        them('Call me later')
+      ])
+    ]
+  },
+
+  /* ------------------------------ IVAN ------------------------------ */
+  {
+    off:true,   // <-- delete this line to show Ivan on the phone
+    name:'Ivan',
+    number:'',
+    memo:'',
+    messages:[
+      day('2-27',[
+        them('you coming tonight?')
+      ])
+    ]
+  }
+
+];
+
+/* Google search history. The LAST entry is the most recent. Example:
+   {q:'nytt lif canyon weather', date:'2-26', time:'21:40'}  */
+const SEARCHES=[
+];
+
 function defaults(){
-  const c='c_inyeon';
-  const m=(from,text)=>({id:uid(),cid:c,from,date:'2-27',time:'',text});
+  const people=CONTACTS.filter(c=>!c.off);   // blocks marked off:true are skipped
+  const contacts=[],messages=[];
+  people.forEach((c,i)=>contacts.push({id:'c'+i,name:c.name,number:c.number||'',memo:c.memo||''}));
+  /* add messages starting from the LAST person so the FIRST person ends up on top of the Messages list */
+  for(let i=people.length-1;i>=0;i--){
+    [].concat.apply([],people[i].messages||[]).forEach(m=>messages.push({id:uid(),cid:'c'+i,from:m.from,date:m.date||'',time:m.time||'',text:m.text}));
+  }
   return {
     settings:{showClock:true,date:'',time:''},
-    contacts:[{id:c,name:'In Yeon',number:'XXX-XXX-XXXX',memo:'bodyguard'},
-              {id:'c_mom',name:'Mom',number:'XXX-XXX-XXXX',memo:''},
-              {id:'c_dad',name:'Dad',number:'XXX-XXX-XXXX',memo:''},
-              {id:'c_loreto',name:'Loreto',number:'XXX-XXX-XXXX',memo:'inyeon uncle'},
-              {id:'c_ivan',name:'Ivan',number:'XXX-XXX-XXXX',memo:'investigator'},
-              {id:'c_ivan2',name:'Ivan2',number:'XXX-XXX-XXXX',memo:'ivan other number'},
-              {id:'c_ivan3',name:'Ivan3',number:'XXX-XXX-XXXX',memo:'ivan other number'}],
-    messages:[
-      m('me','The canyon may be very hot and humid, just considering the location alone. Just keep that in mind when you decide on clothing.'),
-      m('them','OK.'),
-      m('them',"Don't care."),
-      m('them','Thank you for the reminder'),
-      m('them','Hope you are well, Yora'),
-      m('them','What made you ask?'),
-      m('me','Hope you’re doing well too, Yeon.'),
-      m('me','No particular reason. I just didn’t want you to suffer a heat stroke.')
-    ],
-    searches:[
-      {id:uid(),q:'kel hunter association database',date:'11/2/1998',time:''},
-      {id:uid(),q:'kayl hunter association database',date:'11/2/1998',time:''},
-      {id:uid(),q:'kale hunter association database',date:'11/2/1998',time:''},
-      {id:uid(),q:'kale hunter association 1998',date:'11/2/1998',time:''},
-
-      {id:uid(),q:'hunter association database',date:'2/19/1999',time:''},
-      {id:uid(),q:'in yeon',date:'2/19/1999',time:''},
-      {id:uid(),q:'how to hide transactions on a card',date:'2/19/1999',time:''},
-      {id:uid(),q:'will the bank send a scam notification if i withdraw too much money',date:'2/19/1999',time:''},
-      {id:uid(),q:'how to withdraw 100M jennies without warning',date:'2/19/1999',time:''},
-
-      {id:uid(),q:'yeon',date:'2/20/1999',time:''},
-      {id:uid(),q:'yeon family estate',date:'2/20/1999',time:''},
-      {id:uid(),q:'yeon family zoldyck',date:'2/20/1999',time:''},
-      {id:uid(),q:'yeon family bellgrave home 1998',date:'2/20/1999',time:''},
-      {id:uid(),q:'kim yeon',date:'2/20/1999',time:''},
-      {id:uid(),q:'in yeon kim yeon',date:'2/20/1999',time:''},
-
-      {id:uid(),q:'detectives',date:'2/21/1999',time:''},
-      {id:uid(),q:'private detectives cheap',date:'2/21/1999',time:''},
-      {id:uid(),q:'ivan rysza hunter association database',date:'2/21/1999',time:''},
-
-      {id:uid(),q:'horses for sale',date:'2/27/1999',time:''},
-      {id:uid(),q:'camp equipment for desert',date:'2/27/1999',time:''},
-      {id:uid(),q:'list of things you need for a desert',date:'2/27/1999',time:''}
-    ]
+    contacts:contacts,
+    messages:messages,
+    searches:SEARCHES.map(q=>({id:uid(),q:q.q,date:q.date||'',time:q.time||''}))
   };
 }
 let store=defaults();
@@ -537,7 +592,7 @@ function pedoScreen(){
 }
 /* ---- Messages ---- */
 function messagesHome(){
-  return listScreen({kind:'mhome',app:'messages',title:'Messages',icon:'mail',labels:['Back','Select',''],
+  return listScreen({kind:'mhome',app:'messages',title:'Messages',icon:'mail',labels:['Back','Select','New'],empty:'No messages',
     items:()=>{
       const items=[];
       const seen={};
@@ -548,7 +603,7 @@ function messagesHome(){
       }
       return items;
     },
-    onMenu:()=>{}});
+    onMenu:()=>push(pickContact())});
 }
 function pickContact(){
   return listScreen({kind:'pick',app:'messages',title:'Send to',icon:'contacts',labels:['Back','Select',''],empty:'No contacts',
@@ -558,7 +613,7 @@ function openThread(cid){
   if(store.messages.some(m=>m.cid===cid))push(messageView(cid));else push(compose(cid));
 }
 function messageView(cid,startId){
-  const d={kind:'thread',bg:'idle',app:'messages',softs:true,cid:cid,id:startId||null,labels:['Back','','']};
+  const d={kind:'thread',bg:'idle',app:'messages',softs:true,cid:cid,id:startId||null,labels:['Back','Reply','Menu']};
   const list=()=>store.messages.filter(m=>m.cid===cid);
   const cur=()=>{
     const l=list();if(!l.length)return null;
@@ -581,8 +636,8 @@ function messageView(cid,startId){
       return true;
     }
     if(k==='up'||k==='down'){const b=$('#mbox');if(b)b.scrollTop+=(k==='up'?-40:40);return true;}
-    if(isOk(k))return true;
-    if(k==='soft3')return true;
+    if(isOk(k)){push(compose(cid));return true;}
+    if(k==='soft3'){push(threadMenu(d));return true;}
     return false;
   };
   return d;
@@ -628,27 +683,31 @@ function compose(cid){
 /* ---- Contacts ---- */
 function contactsList(){
   return listScreen({kind:'contacts',app:'contacts',title:'Contacts',icon:'contacts',labels:['Back','Select',''],
-    items:()=>store.contacts.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(c=>({label:c.name,sub:c.number||undefined,icon:'contacts',action:()=>push(contactView(c.id))})),
-    onMenu:()=>{}});
+    items:()=>store.contacts.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(c=>({label:c.name,sub:c.number||undefined,icon:'contacts',action:()=>push(contactView(c.id))}) )});
 }
 function contactView(id){
-  const d={kind:'cview',bg:'idle',app:'contacts',softs:true,labels:['Back','','']};
+  const d={kind:'cview',bg:'idle',app:'contacts',softs:true,labels:['Back','Message','Menu']};
   d.render=function(el){
     const c=getContact(id);if(!c){el.innerHTML='';return;}
     el.innerHTML='<div class="mv"><div class="mname">'+esc(c.name)+'</div>'+AVATAR+'<div class="mbox"><div class="mtext">'+(c.number?esc(c.number):'<span class="dim">No number</span>')+(c.memo?'<br><br>'+esc(c.memo):'')+'</div></div></div>';
   };
   d.onKey=function(k){
-    if(isOk(k)||k==='soft3')return true;
+    if(isOk(k)){openThread(id);return true;}
+    if(k==='soft3'){push(listScreen({kind:'cmenu',app:'contacts',title:'Menu',icon:'contacts',labels:['Back','Select',''],items:[
+      {label:'Edit',action:()=>push(contactForm(id))},
+      {label:'Delete',action:()=>{const c=getContact(id);push(confirmScreen('Delete '+(c?c.name:'this contact')+'?',()=>{deleteContact(id);popTo('contacts');}));}}
+    ]}));return true;}
     return false;
   };
   return d;
 }
 function contactForm(id){
-  const c=id?getContact(id):null;
+  if(!id)return standby();
+  const c=getContact(id);
   const d={kind:'form',bg:'menu',app:'contacts',softs:true,f:0,labels:['Back','Save','Clear'],vals:{name:c?c.name:'',number:c?c.number:'',memo:c?c.memo:''}};
   const F=['name','number','memo'];
   d.render=function(el){
-    el.innerHTML=hdrHTML(c?'Edit contact':'New contact','contacts')+'<div class="form"><label>Name</label><input data-bind="name" data-f="0" maxlength="40" value="'+esc(d.vals.name)+'"><label>Number</label><input data-bind="number" data-f="1" maxlength="30" value="'+esc(d.vals.number)+'"><label>Memo</label><input data-bind="memo" data-f="2" maxlength="80" value="'+esc(d.vals.memo)+'"></div>';
+    el.innerHTML=hdrHTML('Edit contact','contacts')+'<div class="form"><label>Name</label><input data-bind="name" data-f="0" maxlength="40" value="'+esc(d.vals.name)+'"><label>Number</label><input data-bind="number" data-f="1" maxlength="30" value="'+esc(d.vals.number)+'"><label>Memo</label><input data-bind="memo" data-f="2" maxlength="80" value="'+esc(d.vals.memo)+'"></div>';
   };
   d.after=function(el){const i=el.querySelector('input[data-f="'+d.f+'"]');if(i){i.focus({preventScroll:true});}};
   d.onKey=function(k){
@@ -666,8 +725,7 @@ function contactForm(id){
 }
 function saveContact(id,name,number,memo){
   name=name.trim();number=(number||'').trim();memo=(memo||'').trim();
-  if(id){const c=getContact(id);if(c){c.name=name;c.number=number;c.memo=memo;}}
-  else store.contacts.push({id:uid(),name:name,number:number,memo:memo});
+  const c=getContact(id);if(c){c.name=name;c.number=number;c.memo=memo;}
   save();
 }
 function deleteContact(id){
@@ -680,15 +738,6 @@ function deleteContact(id){
 /* ---- Google ---- */
 const GURL=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
 function recordSearch(q){store.searches.push({id:uid(),q:q,date:defDate(),time:defTime()});save();}
-function groupedSearchHistory(){
-  const groups=[];
-  store.searches.forEach(e=>{
-    let g=groups.find(x=>x.date===e.date);
-    if(!g){g={date:e.date,items:[]};groups.push(g);}
-    g.items.push(e);
-  });
-  return groups;
-}
 function runSearch(q,record){
   q=(q||'').trim();if(!q)return;
   if(record)recordSearch(q);
@@ -729,10 +778,7 @@ function googleMenu(){
 }
 function historyScreen(){
   return listScreen({kind:'ghist',app:'google',theme:'light',bg:'white',title:'Search history',icon:'google',labels:['Back','Search',''],empty:'No history',
-    items:()=>groupedSearchHistory().flatMap(g=>[
-      {label:g.date,sub:'────────────',disabled:true},
-      ...g.items.map(e=>({label:e.q,sub:e.time||undefined,action:()=>runSearch(e.q,false)}))
-    ])});
+    items:()=>store.searches.slice().reverse().map(e=>({label:e.q,sub:(e.date||'')+(e.time?' '+e.time:'')||undefined,action:()=>runSearch(e.q,false)}))});
 }
 function resultsScreen(q){
   const enc=encodeURIComponent(q);
@@ -751,30 +797,36 @@ const P={from:'them',date:'',time:'',text:'',gq:'',gdate:'',gtime:'',cname:'',cn
 function ctxCid(){const c=S.ctx.cid;if(c&&getContact(c))return c;return store.contacts[0]?store.contacts[0].id:null;}
 
 function msgPanel(){
-  const cid=ctxCid();
-  let h='<div class="phead"><h2 class="ptitle">Chat history</h2><select id="pcid">'+store.contacts.map(c=>'<option value="'+c.id+'"'+(c.id===cid?' selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select></div>';
-  if(!cid)return h+'<p class="dim">No contacts.</p>';
+  const cid=ctxCid(),ct=getContact(cid);
+  const cnt=id=>store.messages.filter(m=>m.cid===id).length;
+  let h='';
+  if(!cid)return h;
   const msgs=store.messages.filter(m=>m.cid===cid);
   let last=null;
   msgs.forEach(m=>{
-    if(m.date!==last){h+='<div class="pdate">'+esc(m.date||'—')+'</div>';last=m.date;}
-    h+='<div class="bub-row '+m.from+'"><div class="bub '+(m.from==='me'?'sent':'recv')+'"><div>'+esc(m.text)+'</div>'+(m.time?'<div class="bmeta">'+esc(m.time)+'</div>':'')+'</div></div>';
+    if(m.date!==last){h+='<div class="pdate" data-act="edate" data-id="'+m.id+'" title="Click to change this date">'+esc(m.date||'—')+'</div>';last=m.date;}
+    h+='<div class="bub-row '+m.from+'"><div class="bub '+(m.from==='me'?'sent':'recv')+(m.id===S.ctx.msgId?' cur':'')+'" data-act="selmsg" data-id="'+m.id+'"><div>'+esc(m.text)+'</div>'+(m.time?'<div class="bmeta">'+esc(m.time)+'</div>':'')+'</div></div>';
   });
-  if(!msgs.length)h+='<p class="dim">No messages in this conversation.</p>';
+  if(!msgs.length)h+='<p class="dim">No messages with '+esc(ct?ct.name:'this person')+' yet. Add one below and it will show up in the phone\'s Messages list.</p>';
   return h;
 }
 function contactPanel(){
   let h='<h2 class="ptitle">Contacts</h2>';
-  h+=store.contacts.map(c=>'<div class="crow"><div><b>'+esc(c.name)+'</b><div class="dim">'+esc(c.number||'No number')+(c.memo?' · '+esc(c.memo):'')+'</div></div></div>').join('')||'<p class="dim">No contacts.</p>';
+  h+=store.contacts.map(c=>'<div class="crow"><div><b>'+esc(c.name)+'</b><div class="dim">'+esc(c.number||'No number')+(c.memo?' · '+esc(c.memo):'')+'</div></div><div><button class="mini" data-act="cedit" data-id="'+c.id+'">Edit</button> <button class="mini" data-act="cdel" data-id="'+c.id+'">×</button></div></div>').join('')||'<p class="dim">No contacts yet.</p>';
+  if(P.cedit)h+='<div class="composer"><div class="lbl2">Edit contact</div><input data-p="cname" placeholder="Name" value="'+esc(P.cname)+'"><input data-p="cnum" placeholder="Phone number" value="'+esc(P.cnum)+'"><input data-p="cmemo" placeholder="Memo (optional)" value="'+esc(P.cmemo)+'"><div class="frow"><button class="btn" data-act="csave">Save</button><button class="btn" data-act="ccancel">Cancel</button></div></div>';
   return h;
 }
 function googlePanel(){
   let h='<h2 class="ptitle">Search history</h2>';
-  const groups=groupedSearchHistory();
-  h+=groups.map(g=>'<div class="pdate">'+esc(g.date)+'</div>'+g.items.map(e=>'<div class="srow"><div class="sq">'+esc(e.q)+'</div>'+(e.time?'<div class="dim">'+esc(e.time)+'</div>':'')+'</div>').join('')).join('')||'<p class="dim">No search history yet.</p>';
+  const rows=store.searches.slice().reverse();
+  h+=rows.map(e=>'<div class="srow"><div class="sq">'+esc(e.q)+'</div><div class="dim">'+esc((e.date||'')+(e.time?' '+e.time:''))+'</div><button class="mini" data-act="gdel" data-id="'+e.id+'">×</button></div>').join('')||'<p class="dim">No search history yet.</p>';
+  h+='<div class="composer"><div class="lbl2">Add a search (newest-added shows first)</div><input data-p="gq" placeholder="Search text" value="'+esc(P.gq)+'"><div class="frow"><input data-p="gdate" placeholder="Date, e.g. '+esc(defDate())+'" value="'+esc(P.gdate)+'"><input data-p="gtime" placeholder="Time (optional)" value="'+esc(P.gtime)+'"></div><div class="frow"><button class="btn" data-act="gadd">Add to history</button><button class="btn warn" data-act="gclear">Clear all</button></div></div>';
   return h;
 }
-function generalPanel(open){return '';}
+function generalPanel(open){
+  const st=store.settings;
+  return '<details class="gen"'+(open?' open':'')+'><summary>Phone clock &amp; data</summary><p class="note">Leave blank to use the real date and time. Nothing here is saved: refreshing the page resets the phone.</p><div class="frow"><label>Phone date<input data-s="date" value="'+esc(st.date)+'" placeholder="M-D, e.g. 2-27"></label><label>Phone time<input data-s="time" value="'+esc(st.time)+'" placeholder="HH:MM"></label></div></details>';
+}
 function renderPanel(){
   const p=$('#panel'),t=top();
   const app=(S.open&&!S.booting&&t)?t.app:null;
@@ -782,7 +834,7 @@ function renderPanel(){
   if(!app)return;
   let h='';
   if(app==='messages')h=msgPanel();else if(app==='contacts')h=contactPanel();else if(app==='google')h=googlePanel();else if(app==='set')h='<h2 class="ptitle">Phone settings</h2>';
-  $('#pin').innerHTML=h+generalPanel(app==='set');
+  $('#pin').innerHTML=h;
 }
 function refreshAll(){save();renderScreen(true);}
 function moveMsg(id,dir){
@@ -793,15 +845,64 @@ function moveMsg(id,dir){
   const t=store.messages[i];store.messages[i]=store.messages[j];store.messages[j]=t;
 }
 
-$('#panel').addEventListener('input',()=>{});
+$('#panel').addEventListener('input',e=>{
+  const p=e.target.dataset.p,s=e.target.dataset.s;
+  if(p)P[p]=e.target.value;
+  if(s){store.settings[s]=e.target.value;save();tick();}
+});
 $('#panel').addEventListener('change',e=>{
   if(e.target.id==='pcid'){
     const cid=e.target.value;S.ctx.cid=cid;
     if(top()&&top().kind==='thread'){S.stack.pop();if(store.messages.some(m=>m.cid===cid))push(messageView(cid));else renderScreen(true);}
     else renderPanel();
   }
+  if(e.target.id==='impfile'){
+    const f=e.target.files&&e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=()=>{try{const o=JSON.parse(r.result);const d=defaults();store={settings:Object.assign(d.settings,o.settings||{}),contacts:o.contacts||[],messages:o.messages||[],searches:o.searches||[]};S.ctx={cid:null,msgId:null};refreshAll();tick();}catch(err){alert('That file could not be read.');}};
+    r.readAsText(f);
+  }
 });
-$('#panel').addEventListener('click',()=>{});
+$('#panel').addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el||el.tagName==='INPUT'||el.tagName==='SELECT')return;
+  const act=el.dataset.act,id=el.dataset.id,t=top();
+  switch(act){
+    case 'selmsg':S.ctx.msgId=id;if(t&&t.kind==='thread')t.id=id;renderScreen(true);break;
+    case 'dmsg':store.messages=store.messages.filter(m=>m.id!==id);refreshAll();break;
+    case 'emsg':{const m=store.messages.find(x=>x.id===id);if(!m)break;const v=prompt('Edit message',m.text);if(v!==null&&v.trim()){m.text=v;refreshAll();}break;}
+    case 'mvup':moveMsg(id,-1);refreshAll();break;
+    case 'mvdn':moveMsg(id,1);refreshAll();break;
+    case 'edate':{
+      const i=store.messages.findIndex(m=>m.id===id);if(i<0)break;
+      const old=store.messages[i].date,cid=store.messages[i].cid;
+      const v=prompt('Date for this group of messages (e.g. 2-27)',old||'');if(v===null)break;
+      for(let j=i;j<store.messages.length;j++){const m=store.messages[j];if(m.cid!==cid)continue;if(m.date!==old)break;m.date=v.trim();}
+      refreshAll();break;}
+    case 'pickc':{S.ctx.cid=id;const t2=top();
+      if(t2&&t2.kind==='thread'){S.stack.pop();if(store.messages.some(m=>m.cid===id))push(messageView(id));else renderScreen(true);}else renderPanel();break;}
+    case 'who':P.from=el.dataset.v;renderPanel();break;
+    case 'addmsg':{
+      const cid=ctxCid();if(!cid){alert('Add a contact first.');break;}
+      const text=P.text.trim();if(!text)break;
+      const date=(P.date.trim()||defDate()),m={id:uid(),cid:cid,from:P.from,date:date,time:P.time.trim()||defTime(),text:text};
+      store.messages.push(m);P.text='';P.date=P.date.trim()?date:'';S.ctx.cid=cid;S.ctx.msgId=m.id;
+      if(t&&t.kind==='thread'&&t.cid===cid)t.id=m.id;
+      refreshAll();break;}
+    case 'clearthread':{const cid=ctxCid();if(cid&&confirm('Delete every message in this thread?')){store.messages=store.messages.filter(m=>m.cid!==cid);refreshAll();}break;}
+    case 'gadd':{const q=P.gq.trim();if(!q)break;store.searches.push({id:uid(),q:q,date:P.gdate.trim()||defDate(),time:P.gtime.trim()||defTime()});P.gq='';refreshAll();break;}
+    case 'gdel':store.searches=store.searches.filter(s=>s.id!==id);refreshAll();break;
+    case 'gclear':if(confirm('Clear all search history?')){store.searches=[];refreshAll();}break;
+    case 'cedit':{const c=getContact(id);if(c){P.cedit=id;P.cname=c.name;P.cnum=c.number;P.cmemo=c.memo;renderPanel();}break;}
+    case 'ccancel':P.cedit=null;P.cname=P.cnum=P.cmemo='';renderPanel();break;
+    case 'csave':if(!P.cname.trim())break;saveContact(P.cedit,P.cname,P.cnum,P.cmemo);P.cedit=null;P.cname=P.cnum=P.cmemo='';refreshAll();break;
+    case 'cdel':{const c=getContact(id);if(c&&confirm('Delete '+c.name+' and their messages?')){deleteContact(id);refreshAll();}break;}
+    case 'export':{
+      const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yora-phone-data.json';document.body.appendChild(a);a.click();a.remove();break;}
+    case 'reset':if(confirm('Reset all phone data to the starting state?')){store=defaults();S.ctx={cid:null,msgId:null};save();S.stack=[standby()];push(menuScreen());tick();}break;
+  }
+});
+
 /* ================= closed phone display ================= */
 function lcdThreshold(c){
   const x=c.getContext('2d'),d=x.getImageData(0,0,c.width,c.height),p=d.data;
@@ -857,7 +958,8 @@ function tick(){
 const closedEl=$('#closed'),openEl=$('#openPhone');
 function fit(){
   const W=430,H=1100;
-  const s=Math.max(.35,Math.min(1,(window.innerHeight-80)/H,(window.innerWidth-32)/W));
+  /* leave room for the page padding, the hint text and the Close phone link so nothing scrolls */
+  const s=Math.max(.3,Math.min(.96,(window.innerHeight-122)/H,(window.innerWidth-32)/W));
   $('#box').style.width=(W*s)+'px';$('#box').style.height=(H*s)+'px';
   const sc=$('#scaler');sc.style.width=W+'px';sc.style.height=H+'px';sc.style.transform='scale('+s+')';
 }
