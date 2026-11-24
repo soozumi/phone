@@ -688,46 +688,16 @@ function contactsList(){
     items:()=>store.contacts.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(c=>({label:c.name,sub:c.number||undefined,icon:'contacts',action:()=>push(contactView(c.id))}) )});
 }
 function contactView(id){
-  const d={kind:'cview',bg:'idle',app:'contacts',softs:true,labels:['Back','Message','Menu']};
+  const d={kind:'cview',bg:'idle',app:'contacts',softs:true,labels:['Back','Message','']};
   d.render=function(el){
     const c=getContact(id);if(!c){el.innerHTML='';return;}
     el.innerHTML='<div class="mv"><div class="mname">'+esc(c.name)+'</div>'+AVATAR+'<div class="mbox"><div class="mtext">'+(c.number?esc(c.number):'<span class="dim">No number</span>')+(c.memo?'<br><br>'+esc(c.memo):'')+'</div></div></div>';
   };
   d.onKey=function(k){
     if(isOk(k)){openThread(id);return true;}
-    if(k==='soft3'){push(listScreen({kind:'cmenu',app:'contacts',title:'Menu',icon:'contacts',labels:['Back','Select',''],items:[
-      {label:'Edit',action:()=>push(contactForm(id))}
-    ]}));return true;}
     return false;
   };
   return d;
-}
-function contactForm(id){
-  if(!id)return standby();
-  const c=getContact(id);
-  const d={kind:'form',bg:'menu',app:'contacts',softs:true,f:0,labels:['Back','Save','Clear'],vals:{name:c?c.name:'',number:c?c.number:'',memo:c?c.memo:''}};
-  const F=['name','number','memo'];
-  d.render=function(el){
-    el.innerHTML=hdrHTML('Edit contact','contacts')+'<div class="form"><label>Name</label><input data-bind="name" data-f="0" maxlength="40" value="'+esc(d.vals.name)+'"><label>Number</label><input data-bind="number" data-f="1" maxlength="30" value="'+esc(d.vals.number)+'"><label>Memo</label><input data-bind="memo" data-f="2" maxlength="80" value="'+esc(d.vals.memo)+'"></div>';
-  };
-  d.after=function(el){const i=el.querySelector('input[data-f="'+d.f+'"]');if(i){i.focus({preventScroll:true});}};
-  d.onKey=function(k){
-    if(k==='up'){d.f=Math.max(0,d.f-1);renderScreen(false);return true;}
-    if(k==='down'){d.f=Math.min(2,d.f+1);renderScreen(false);return true;}
-    if(isOk(k)){
-      if(!d.vals.name.trim())return true;
-      saveContact(id,d.vals.name,d.vals.number,d.vals.memo);
-      popTo('contacts');return true;
-    }
-    if(k==='soft3'){d.vals[F[d.f]]='';renderScreen(false);return true;}
-    return false;
-  };
-  return d;
-}
-function saveContact(id,name,number,memo){
-  name=name.trim();number=(number||'').trim();memo=(memo||'').trim();
-  const c=getContact(id);if(c){c.name=name;c.number=number;c.memo=memo;}
-  save();
 }
 /* ---- Google ---- */
 const GURL=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
@@ -784,7 +754,7 @@ function resultsScreen(q){
 }
 
 /* ================= side panel ================= */
-const P={from:'them',date:'',time:'',text:'',cname:'',cnum:'',cmemo:'',cedit:null};
+const P={from:'them',date:'',time:'',text:''};
 function ctxCid(){const c=S.ctx.cid;if(c&&getContact(c))return c;return store.contacts[0]?store.contacts[0].id:null;}
 
 function msgPanel(){
@@ -803,9 +773,7 @@ function msgPanel(){
 }
 function contactPanel(){
   let h='<h2 class="ptitle">Contacts</h2>';
-  h+=store.contacts.map(c=>'<div class="crow"><div><b>'+esc(c.name)+'</b><div class="dim">'+esc(c.number||'No number')+(c.memo?' · '+esc(c.memo):'')+'</div></div><div><button class="mini" data-act="cedit" data-id="'+c.id+'">Edit</button></div></div>').join('')||'<p class="dim">No contacts yet.</p>';
-  if(P.cedit)h+='<div class="composer"><div class="lbl2">Edit contact</div><input data-p="cname" placeholder="Name" value="'+esc(P.cname)+'"><input data-p="cnum" placeholder="Phone number" value="'+esc(P.cnum)+'"><input data-p="cmemo" placeholder="Memo (optional)" value="'+esc(P.cmemo)+'"><div class="frow"><button class="btn" data-act="csave">Save</button><button class="btn" data-act="ccancel">Cancel</button></div></div>';
-  return h;
+  return h+(store.contacts.map(c=>'<div class="crow"><div><b>'+esc(c.name)+'</b><div class="dim">'+esc(c.number||'No number')+(c.memo?' · '+esc(c.memo):'')+'</div></div></div>').join('')||'<p class="dim">No contacts yet.</p>');
 }
 function googlePanel(){
   let h='<h2 class="ptitle">Search history</h2>';
@@ -879,9 +847,6 @@ $('#panel').addEventListener('click',e=>{
       if(t&&t.kind==='thread'&&t.cid===cid)t.id=m.id;
       refreshAll();break;}
     case 'clearthread':{const cid=ctxCid();if(cid&&confirm('Delete every message in this thread?')){store.messages=store.messages.filter(m=>m.cid!==cid);refreshAll();}break;}
-    case 'cedit':{const c=getContact(id);if(c){P.cedit=id;P.cname=c.name;P.cnum=c.number;P.cmemo=c.memo;renderPanel();}break;}
-    case 'ccancel':P.cedit=null;P.cname=P.cnum=P.cmemo='';renderPanel();break;
-    case 'csave':if(!P.cname.trim())break;saveContact(P.cedit,P.cname,P.cnum,P.cmemo);P.cedit=null;P.cname=P.cnum=P.cmemo='';refreshAll();break;
     case 'export':{
       const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});
       const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yora-phone-data.json';document.body.appendChild(a);a.click();a.remove();break;}
