@@ -588,7 +588,7 @@ function folderScreen(name){
     items:[{label:'All Data',icon:'folder',action:()=>push(notice(name,'folder','No data.'))}]});
 }
 function pedoScreen(){
-  const n=phoneNow(),steps=2300+((n.m*31+n.d*17)*137)%7000;
+  const n=phoneNow(),steps=10000+((n.m*31+n.d*17)*137)%5000;
   return {kind:'pedo',bg:'menu',softs:true,labels:['Back','',''],
     render(el){el.innerHTML=hdrHTML('Fitness Pedometer','walk')+'<div class="pedo"><div class="pbig">'+steps.toLocaleString('en-US')+'</div><div>steps today</div></div>';}};
 }
