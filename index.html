@@ -432,6 +432,27 @@ const CONTACTS=[
 /* Google search history. The LAST entry is the most recent. Example:
    {q:'nytt lif canyon weather', date:'2-26', time:'21:40'}  */
 const SEARCHES=[
+  {q:'kel hunter association database',date:'11-2-1998'},
+  {q:'kayl hunter association database',date:'11-2-1998'},
+  {q:'kale hunter association database',date:'11-2-1998'},
+  {q:'kale hunter association 1998',date:'11-2-1998'},
+  {q:'hunter association database',date:'2-19-1999'},
+  {q:'in yeon',date:'2-19-1999'},
+  {q:'how to hide transactions on a card',date:'2-19-1999'},
+  {q:'will the bank send a scam notification if i withdraw too much money',date:'2-19-1999'},
+  {q:'how to withdraw 100M jennies without warning',date:'2-19-1999'},
+  {q:'yeon',date:'2-20-1999'},
+  {q:'yeon family estate',date:'2-20-1999'},
+  {q:'yeon family zoldyck',date:'2-20-1999'},
+  {q:'yeon family bellgrave home 1998',date:'2-20-1999'},
+  {q:'kim yeon',date:'2-20-1999'},
+  {q:'in yeon kim yeon',date:'2-20-1999'},
+  {q:'detectives',date:'2-21-1999'},
+  {q:'private detectives cheap',date:'2-21-1999'},
+  {q:'ivan rysza hunter association database',date:'2-21-1999'},
+  {q:'horses for sale',date:'2-27-1999'},
+  {q:'camp equipment for desert',date:'2-27-1999'},
+  {q:'list of things you need for a desert',date:'2-27-1999'}
 ];
 
 function defaults(){
@@ -773,7 +794,7 @@ function googleMenu(){
 }
 function historyScreen(){
   return listScreen({kind:'ghist',app:'google',theme:'light',bg:'white',title:'Search history',icon:'google',labels:['Back','Search',''],empty:'No history',
-    items:()=>store.searches.slice().reverse().map(e=>({label:e.q,sub:(e.date||'')+(e.time?' '+e.time:'')||undefined,action:()=>runSearch(e.q)}))});
+    items:()=>store.searches.map(e=>({label:e.q,sub:(e.date||'')+(e.time?' '+e.time:'')||undefined,action:()=>runSearch(e.q)}))});
 }
 function resultsScreen(q){
   const enc=encodeURIComponent(q);
@@ -811,7 +832,7 @@ function contactPanel(){
 }
 function googlePanel(){
   let h='<h2 class="ptitle">Search history</h2>';
-  const rows=store.searches.slice().reverse();
+  const rows=store.searches;
   h+=rows.map(e=>'<div class="srow"><div class="sq">'+esc(e.q)+'</div><div class="dim">'+esc((e.date||'')+(e.time?' '+e.time:''))+'</div></div>').join('')||'<p class="dim">No search history yet.</p>';
   return h;
 }
